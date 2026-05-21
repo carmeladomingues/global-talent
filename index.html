@@ -42,7 +42,6 @@
 
   .wrap { max-width: 860px; margin: 0 auto; }
 
-  /* Union Jack accent bar */
   .topbar {
     height: 5px;
     background: linear-gradient(90deg, var(--red) 0%, var(--red) 33%, var(--blue) 33%, var(--blue) 66%, var(--red) 66%);
@@ -50,7 +49,6 @@
     margin-bottom: 40px;
   }
 
-  /* Header */
   header { margin-bottom: 40px; }
   .flag { font-size: 32px; margin-bottom: 12px; display: block; }
   .eyebrow {
@@ -66,10 +64,22 @@
   h1 em { font-style: italic; color: var(--red); }
   .subtitle { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
 
-  /* Progress */
+  /* Timeline pills */
+  .timeline {
+    display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 32px;
+  }
+  .tpill {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 6px 14px; border-radius: 99px;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--muted); display: flex; align-items: center; gap: 6px;
+  }
+  .tpill.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .tpill.target { background: var(--lightred); border-color: var(--red); color: var(--red); }
+
   .progress-wrap {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 20px 24px; margin: 28px 0 32px;
+    border-radius: 16px; padding: 20px 24px; margin-bottom: 32px;
   }
   .progress-label {
     display: flex; justify-content: space-between;
@@ -84,7 +94,6 @@
     border-radius: 99px; transition: width .5s ease;
   }
 
-  /* Stats */
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
   .stat {
     background: var(--surface); border: 1px solid var(--border);
@@ -97,7 +106,6 @@
   .stat-num.todo { color: var(--muted); }
   .stat-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .04em; }
 
-  /* Section */
   .section { margin-bottom: 36px; }
   .section-header {
     display: flex; align-items: baseline; gap: 10px;
@@ -108,7 +116,6 @@
   .section-title { font-size: 14px; font-weight: 600; color: var(--blue); }
   .section-sub { font-size: 12px; color: var(--muted); }
 
-  /* Item */
   .item {
     display: flex; align-items: flex-start; gap: 12px;
     padding: 14px 16px; border-radius: 12px;
@@ -120,7 +127,6 @@
   .item.done-item { background: var(--done-bg); border-color: rgba(26,122,69,.2); }
   .item.done-item:hover { border-color: var(--done); }
 
-  /* Checkbox */
   .checkbox {
     flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
@@ -128,7 +134,7 @@
     border: 2px solid var(--border); background: var(--surface2);
     user-select: none; margin-top: 1px;
   }
-  .checkbox:hover { border-color: var(--blue); transform: scale(1.05); }
+  .checkbox:hover { border-color: var(--blue); transform: scale(1.08); }
   .checkbox.done { background: var(--done); border-color: var(--done); color: white; }
   .checkbox.progress { background: var(--progress-bg); border-color: var(--progress); }
   .checkbox.todo { background: var(--surface2); }
@@ -154,9 +160,8 @@
     padding: 2px 8px; border-radius: 99px; font-weight: 500;
     animation: pulse 1.5s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
 
-  /* Docs checklist box */
   .docs-box {
     background: var(--lightblue); border: 1.5px solid rgba(1,33,105,.15);
     border-radius: 14px; padding: 20px 24px; margin-bottom: 36px;
@@ -180,7 +185,6 @@
   .doc-label.checked { text-decoration: line-through; color: var(--muted); }
   .doc-note { font-size: 11px; color: var(--muted); }
 
-  /* Footer */
   footer {
     margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--border);
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
@@ -199,8 +203,17 @@
     <div class="eyebrow">Global Talent Visa · Exceptional Promise · Tech Nation</div>
     <h1>London, <em>here I come.</em></h1>
     <p class="subtitle">Tracking every evidence, document and deadline for the Tech Nation endorsement. 🎯<br>
-    Target: endorsement October 2026 · arrival November/December 2026 ✈️</p>
+    Deadline to submit: first week of October 2026 · arrival by January 2027 ✈️</p>
   </header>
+
+  <div class="timeline">
+    <div class="tpill active">📍 Now — May 2026</div>
+    <div class="tpill">🎨 Portfolio done — May 31</div>
+    <div class="tpill">🇯🇵 Kyoto confirmed — May 30</div>
+    <div class="tpill">📝 Evidence ready — September</div>
+    <div class="tpill target">🚀 Submit endorsement — Oct 2026</div>
+    <div class="tpill target">🇬🇧 London — Jan 2027</div>
+  </div>
 
   <div class="progress-wrap">
     <div class="progress-label">
@@ -228,7 +241,6 @@
     </div>
   </div>
 
-  <!-- Docs safe storage reminder -->
   <div class="docs-box">
     <div class="docs-box-title">📁 Documents saved locally</div>
     <div class="docs-box-sub">Mark what you already have saved on your computer or Google Drive. No uploads needed — keep sensitive docs off the internet! 🔒</div>
@@ -246,84 +258,83 @@
 
 <script>
 const docs = [
-  { id: "doc-cv", label: "CV", note: "Pronto ✓" },
-  { id: "doc-carta1", label: "Carta de recomendação 1 — orientadora", note: "A conseguir" },
-  { id: "doc-carta2", label: "Carta de recomendação 2", note: "A conseguir" },
-  { id: "doc-carta3", label: "Carta de recomendação 3", note: "A conseguir" },
-  { id: "doc-adappta", label: "Adappta case study PDF", note: "Já submetido ao UX Awards ✓" },
-  { id: "doc-japao", label: "Confirmação fórum de Kyoto + comprovante pagamento", note: "Urgente — até 30/maio ⚡" },
-  { id: "doc-artigo", label: "Artigo publicado", note: "Aguardando publicação" },
-  { id: "doc-uxawards", label: "Resultado UX Awards", note: "Aguardando" },
-  { id: "doc-tese", label: "Documentação da tese (framework + research)", note: "Em andamento" },
-  { id: "doc-ladies", label: "Comprovante Ladies that UX Lisbon", note: "A documentar" },
+  { id: "doc-cv", label: "CV", note: "Ready ✓" },
+  { id: "doc-carta1", label: "Letter of recommendation 1 — supervisor", note: "To collect" },
+  { id: "doc-carta2", label: "Letter of recommendation 2", note: "To collect" },
+  { id: "doc-carta3", label: "Letter of recommendation 3", note: "To collect" },
+  { id: "doc-adappta", label: "Adappta case study PDF", note: "Submitted to UX Awards ✓" },
+  { id: "doc-kyoto", label: "Kyoto forum confirmation + payment receipt", note: "Urgent — by May 30 ⚡" },
+  { id: "doc-artigo", label: "Published article", note: "Awaiting publication" },
+  { id: "doc-uxawards", label: "UX Awards result", note: "Awaiting result" },
+  { id: "doc-tese", label: "Thesis documentation (framework + research)", note: "In progress" },
+  { id: "doc-ladies", label: "Ladies that UX Lisbon proof of participation", note: "To document" },
 ];
 
 const data = [
   {
     emoji: "📄",
-    title: "Documentos obrigatórios",
-    sub: "Tech Nation exige todos — sem exceção",
+    title: "Mandatory documents",
+    sub: "Tech Nation requires all of these — no exceptions",
     items: [
-      { id: "cv", status: "done", title: "CV 📝", tags: ["obrig"], desc: "Pronto! Considerar reescrever bullets da Telus e SAP para soar mais UX/produto." },
-      { id: "ps", status: "todo", title: "Personal statement ✍️", tags: ["obrig"], desc: "Responder: por que UK, o que vai fazer, como vai contribuir para o setor de tech." },
-      { id: "cartas", status: "progress", title: "3 cartas de recomendação 💌", tags: ["obrig"], desc: "1 confirmada (orientadora). Faltam 2 — idealmente de produto digital. Ladies that UX ou cliente pro bono são opções." },
-      { id: "form", status: "todo", title: "Formulário de aplicação 🏛️", tags: ["obrig"], desc: "Submetido pelo Home Office online. Não enviado diretamente ao Tech Nation." },
+      { id: "cv", status: "done", title: "CV 📝", tags: ["obrig"], desc: "Ready! Consider rewriting Telus and SAP bullets to sound more like UX/product work." },
+      { id: "ps", status: "todo", title: "Personal statement ✍️", tags: ["obrig"], desc: "Must answer: why the UK, what you'll do there, and how your work will contribute to the digital tech sector." },
+      { id: "cartas", status: "progress", title: "3 letters of recommendation 💌", tags: ["obrig"], desc: "1 confirmed (supervisor). Need 2 more — ideally from product-led digital tech. Ladies that UX or pro bono client are good options." },
+      { id: "form", status: "todo", title: "Tech Nation application form 🏛️", tags: ["obrig"], desc: "Submitted online via the Home Office portal. Not sent directly to Tech Nation." },
     ]
   },
   {
     emoji: "🏆",
-    title: "10 evidências formais",
-    sub: "Máximo permitido — use todas!",
+    title: "10 formal pieces of evidence",
+    sub: "Maximum allowed — use all of them!",
     items: [
-      { id: "adappta-pdf", status: "done", title: "Adappta case study PDF 📱", tags: ["ev", "opc"], desc: "PDF pronto e submetido ao UX Awards! Evidência de inovação em campo digital. Máx. 3 páginas A4." },
-      { id: "portfolio", status: "progress", title: "Portfólio online 🌐", tags: ["ev"], desc: "GitHub Pages. Meta: finalizar até 31/maio. Faltam: app colaboração, ajustes Instagram, about, contact, design gráfico, tese." },
-      { id: "kyoto", status: "progress", title: "Fórum de Kyoto 🇯🇵", tags: ["ev", "obrig"], desc: "URGENTE — prazo 30/maio! Confirmar pagamento direto com o fórum. Guardar: convite, programa com seu nome, comprovante.", urgent: true },
-      { id: "artigo", status: "progress", title: "Artigo publicado 📰", tags: ["ev", "opc"], desc: "Aguardando publicação. Evidência fortíssima de reconhecimento além da organização." },
-      { id: "ux-awards", status: "progress", title: "UX Awards — Adappta 🥇", tags: ["ev", "opc"], desc: "Submetido! Aguardando resultado. Nomeação ou prêmio conta como reconhecimento externo." },
-      { id: "tese", status: "progress", title: "Tese — documentação do processo 🎓", tags: ["ev", "opc"], desc: "UX research, framework e benchmarking sobre violência doméstica e social design em Portugal. Impacto social é seu diferencial." },
-      { id: "telus", status: "progress", title: "Telus Digital — evidência de produto 💼", tags: ["ev", "opc"], desc: "Dashboards, landing pages, protótipos, +9K LinkedIn. Reescrever como entrega de produto, não marketing." },
-      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon 👩‍💻", tags: ["ev", "opc"], desc: "Documentar: eventos, contribuições, qualquer facilitação ou liderança. Comunidade internacional reconhecida!" },
-      { id: "probono", status: "todo", title: "Projetos pro bono — métricas 📊", tags: ["ev", "opc"], desc: "Contatar clientes para dados ou depoimento qualitativo. Qualquer impacto mensurável ajuda." },
-      { id: "premio2", status: "todo", title: "2º prêmio de design 🏅", tags: ["ev", "opc"], desc: "Você mencionou dois prêmios. Qual é o segundo? Vale submeter antes da aplicação!" },
+      { id: "adappta-pdf", status: "done", title: "Adappta case study PDF 📱", tags: ["ev", "opc"], desc: "PDF ready and submitted to UX Awards! Evidence of innovation in a digital field. Max. 3 A4 pages." },
+      { id: "portfolio", status: "progress", title: "Online portfolio 🌐", tags: ["ev"], desc: "GitHub Pages. Goal: done by May 31. Still missing: collab app, Instagram adjustments, about, contact, graphic design, thesis." },
+      { id: "kyoto", status: "progress", title: "Kyoto forum — participation 🇯🇵", tags: ["ev", "obrig"], desc: "URGENT — deadline May 30! Confirm payment directly with the forum. Save: invitation, programme with your name, payment receipt.", urgent: true },
+      { id: "artigo", status: "progress", title: "Published article 📰", tags: ["ev", "opc"], desc: "Awaiting publication. Very strong evidence of recognition beyond your organisation." },
+      { id: "ux-awards", status: "progress", title: "UX Awards — Adappta 🥇", tags: ["ev", "opc"], desc: "Submitted! Awaiting result. A nomination or award counts as external recognition." },
+      { id: "tese", status: "progress", title: "Thesis — process documentation 🎓", tags: ["ev", "opc"], desc: "UX research, framework and benchmarking on domestic violence and social design in Portugal. Social impact is your differentiator." },
+      { id: "telus", status: "progress", title: "Telus Digital — product evidence 💼", tags: ["ev", "opc"], desc: "Dashboards, landing pages, prototypes, +9K LinkedIn. Reframe as product delivery, not marketing." },
+      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon 👩‍💻", tags: ["ev", "opc"], desc: "Document: events, contributions, any facilitation or leadership. Internationally recognised community!" },
+      { id: "probono", status: "todo", title: "Pro bono projects — metrics 📊", tags: ["ev", "opc"], desc: "Reach out to clients for data or qualitative testimonials. Any measurable impact helps." },
+      { id: "premio2", status: "todo", title: "2nd design award — submission 🏅", tags: ["ev", "opc"], desc: "You mentioned two awards. Which is the second one? Worth submitting before the application!" },
     ]
   },
   {
     emoji: "🎨",
-    title: "Portfólio — páginas a terminar",
-    sub: "Meta: 31 de maio de 2026 🚀",
+    title: "Portfolio — pages to finish",
+    sub: "Goal: May 31, 2026 🚀",
     items: [
-      { id: "p-adappta", status: "done", title: "Adappta ✅", desc: "Completo e lindo! Submetido ao UX Awards." },
-      { id: "p-instagram", status: "progress", title: "Instagram feature 📸", desc: "Em ajustes." },
-      { id: "p-colab", status: "progress", title: "App de colaboração (mestrado) 🤝", desc: "HTML em construção." },
-      { id: "p-index", status: "progress", title: "Index — página inicial 🏠", desc: "Pequenos ajustes." },
-      { id: "p-about", status: "todo", title: "About me 🙋‍♀️", desc: "Super pessoal e intimista — mostrar quem você é de verdade. Nada de designer minimalista e nojenta!" },
-      { id: "p-contact", status: "todo", title: "Contact 📬", desc: "Página de contato." },
-      { id: "p-grafic", status: "todo", title: "Design gráfico 🖌️", desc: "Galeria com todos os projetos gráficos." },
-      { id: "p-tese", status: "todo", title: "Tese 🔬", desc: "Pode montar já! Problema, pesquisa, framework, benchmarking. Seção 'solution in progress'." },
+      { id: "p-adappta", status: "done", title: "Adappta ✅", desc: "Complete and gorgeous! Submitted to UX Awards." },
+      { id: "p-instagram", status: "progress", title: "Instagram feature 📸", desc: "Minor adjustments." },
+      { id: "p-colab", status: "progress", title: "Collaboration app (master's) 🤝", desc: "HTML in progress." },
+      { id: "p-index", status: "progress", title: "Index — homepage 🏠", desc: "Minor adjustments." },
+      { id: "p-about", status: "todo", title: "About me 🙋‍♀️", desc: "Personal, warm and full of personality — show who you really are. No boring minimalist designer vibes here!" },
+      { id: "p-contact", status: "todo", title: "Contact 📬", desc: "Contact page." },
+      { id: "p-grafic", status: "todo", title: "Graphic design 🖌️", desc: "Gallery with all graphic design projects." },
+      { id: "p-tese", status: "todo", title: "Thesis 🔬", desc: "Can start now! Problem, research, framework, benchmarking. Add a 'solution in progress' section." },
     ]
   },
   {
     emoji: "⭐",
-    title: "Critério mandatório",
-    sub: "Exceptional Promise — obrigatório demonstrar",
+    title: "Mandatory criterion",
+    sub: "Exceptional Promise — must demonstrate this",
     items: [
-      { id: "lider", status: "progress", title: "Reconhecimento como potencial líder em digital technology 🌟", tags: ["obrig"], desc: "Coberto por: Kyoto + UX Awards + Ladies that UX + tese. Precisa estar bem documentado e conectado na narrativa." },
+      { id: "lider", status: "progress", title: "Recognised as a potential leader in digital technology 🌟", tags: ["obrig"], desc: "Covered by: Kyoto + UX Awards + Ladies that UX + thesis. Needs to be well documented and connected through a coherent narrative." },
     ]
   },
   {
     emoji: "✨",
-    title: "Critérios opcionais",
-    sub: "Precisa atingir pelo menos 2 dos 4",
+    title: "Optional criteria",
+    sub: "Must meet at least 2 out of 4",
     items: [
-      { id: "oc1", status: "progress", title: "Inovação em campo digital 💡", tags: ["opc"], desc: "Adappta + tese (social design e violência doméstica). Documentar processo end-to-end." },
-      { id: "oc2", status: "progress", title: "Reconhecimento além da organização 🌍", tags: ["opc"], desc: "Kyoto + artigo + UX Awards + Ladies that UX. Seu critério mais forte!" },
-      { id: "oc3", status: "progress", title: "Contribuições técnicas em empresa de produto 🏢", tags: ["opc"], desc: "Telus Digital + SAP. Reescrever CV para evidenciar mais produto e menos marketing." },
-      { id: "oc4", status: "todo", title: "Contribuições acadêmicas publicadas 📚", tags: ["opc"], desc: "Artigo da tese / fórum de Kyoto. Coberto quando a publicação sair." },
+      { id: "oc1", status: "progress", title: "Innovation in a digital field 💡", tags: ["opc"], desc: "Adappta + thesis (social design and domestic violence). Document the end-to-end process." },
+      { id: "oc2", status: "progress", title: "Recognition beyond your organisation 🌍", tags: ["opc"], desc: "Kyoto + article + UX Awards + Ladies that UX. Your strongest criterion!" },
+      { id: "oc3", status: "progress", title: "Technical contributions at a product-led company 🏢", tags: ["opc"], desc: "Telus Digital + SAP. Rewrite CV to highlight product work over marketing." },
+      { id: "oc4", status: "todo", title: "Academic contributions published by an expert 📚", tags: ["opc"], desc: "Thesis article / Kyoto forum. Covered once the publication is out." },
     ]
   }
 ];
 
-// Build docs checklist
 function buildDocs() {
   const container = document.getElementById("docs-list");
   const saved = JSON.parse(localStorage.getItem("gt-docs") || "{}");
@@ -350,7 +361,6 @@ function toggleDoc(id) {
   document.getElementById(`dlabel-${id}`).className = `doc-label ${saved[id] ? 'checked' : ''}`;
 }
 
-// Build sections
 function getSymbol(s) {
   if (s === "done") return "✓";
   if (s === "progress") return "~";
@@ -373,8 +383,8 @@ function buildSections() {
       const div = document.createElement("div");
       div.className = `item${item.status === "done" ? " done-item" : ""}`;
       div.id = `item-${item.id}`;
-      const tags = (item.tags || []).map(t => `<span class="tag ${t}">${t === "obrig" ? "mandatório" : t === "opc" ? "opcional" : "evidência"}</span>`).join("");
-      const urgent = item.urgent ? `<span class="deadline">⚡ até 30/maio</span>` : "";
+      const tags = (item.tags || []).map(t => `<span class="tag ${t}">${t === "obrig" ? "mandatory" : t === "opc" ? "optional" : "evidence"}</span>`).join("");
+      const urgent = item.urgent ? `<span class="deadline">⚡ by May 30</span>` : "";
       div.innerHTML = `
         <div class="checkbox ${item.status}" id="cb-${item.id}" onclick="cycleStatus('${item.id}')">${getSymbol(item.status)}</div>
         <div class="item-body">
