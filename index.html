@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Talent Tracker — Carmela</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --surface2: #222118;
+    --border: #2e2c26;
+    --text: #e8e4d8;
+    --muted: #7a7568;
+    --accent: #c9a84c;
+    --accent2: #8b6fd4;
+    --done: #5a9e6f;
+    --progress: #c9a84c;
+    --todo: #4a4840;
+    --danger: #c95a5a;
+    --tag-obrig: #c95a5a;
+    --tag-opc: #5a7ec9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  .grain {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+
+  /* Header */
+  header { margin-bottom: 48px; }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .subtitle { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Progress bar */
+  .progress-wrap { margin: 32px 0 48px; }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  .progress-label span:last-child { color: var(--accent); }
+  .bar-bg { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 2px; transition: width .6s ease;
+  }
+
+  /* Stats row */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 48px; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif; font-size: 36px;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stat-num.done { color: var(--done); }
+  .stat-num.prog { color: var(--progress); }
+  .stat-num.todo { color: var(--muted); }
+  .stat-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .05em; }
+
+  /* Sections */
+  .section { margin-bottom: 40px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .section-count {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 2px 8px; border-radius: 99px; color: var(--muted);
+  }
+
+  /* Items */
+  .item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 16px; border-radius: 10px;
+    border: 1px solid transparent;
+    margin-bottom: 6px; cursor: pointer;
+    transition: all .2s;
+    background: var(--surface);
+  }
+  .item:hover { border-color: var(--border); background: var(--surface2); }
+  .item.done-item { opacity: .7; }
+
+  .dot {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; margin-top: 1px; font-weight: 600;
+  }
+  .dot.done { background: rgba(90,158,111,.15); color: var(--done); border: 1px solid rgba(90,158,111,.3); }
+  .dot.progress { background: rgba(201,168,76,.15); color: var(--progress); border: 1px solid rgba(201,168,76,.3); }
+  .dot.todo { background: var(--surface2); border: 1px solid var(--border); }
+
+  .item-body { flex: 1; min-width: 0; }
+  .item-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
+  .item-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .item.done-item .item-title { text-decoration: line-through; color: var(--muted); }
+  .item-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .tag {
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .06em;
+    padding: 2px 7px; border-radius: 99px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .tag.obrig { background: rgba(201,90,90,.12); color: var(--tag-obrig); border: 1px solid rgba(201,90,90,.2); }
+  .tag.opc { background: rgba(90,126,201,.12); color: var(--tag-opc); border: 1px solid rgba(90,126,201,.2); }
+  .tag.ev { background: rgba(139,111,212,.12); color: var(--accent2); border: 1px solid rgba(139,111,212,.2); }
+
+  /* Deadline pill */
+  .deadline {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--danger); background: rgba(201,90,90,.1);
+    border: 1px solid rgba(201,90,90,.2);
+    padding: 2px 8px; border-radius: 99px;
+  }
+
+  /* Toggle status */
+  .toggle-btn {
+    flex-shrink: 0; background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 16px; padding: 0; line-height: 1;
+    transition: color .2s;
+  }
+  .toggle-btn:hover { color: var(--done); }
+
+  /* Footer */
+  footer {
+    margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+  }
+  footer span { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat-num { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Global Talent Visa · Exceptional Promise · Tech Nation</div>
+    <h1>The road to <em>London.</em></h1>
+    <p class="subtitle">Tracking every evidence, document, and deadline for the endorsement application.<br>Target: endorsement October 2026 · arrival November/December 2026.</p>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Overall progress</span>
+      <span id="pct">0%</span>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num done" id="s-done">0</div><div class="stat-label">done</div></div>
+    <div class="stat"><div class="stat-num prog" id="s-prog">0</div><div class="stat-label">in progress</div></div>
+    <div class="stat"><div class="stat-num todo" id="s-todo">0</div><div class="stat-label">to do</div></div>
+  </div>
+
+  <div id="sections"></div>
+
+  <footer>
+    <span>Carmela Domingues</span>
+    <span id="last-updated"></span>
+  </footer>
+
+</div>
+
+<script>
+const data = [
+  {
+    title: "Documentos obrigatórios",
+    subtitle: "Tech Nation exige todos — sem exceção",
+    items: [
+      { id: "cv", status: "done", title: "CV", tags: ["obrig"], desc: "Pronto. Considerar reescrever bullets da Telus e SAP para soar mais UX/produto." },
+      { id: "ps", status: "todo", title: "Personal statement", tags: ["obrig"], desc: "Responder: por que UK, o que vai fazer, como vai contribuir para o setor de tech." },
+      { id: "cartas", status: "progress", title: "3 cartas de recomendação", tags: ["obrig"], desc: "1 confirmada (orientadora). Faltam 2 — idealmente de produto digital. Ladies that UX ou cliente pro bono são opções." },
+      { id: "form", status: "todo", title: "Formulário de aplicação", tags: ["obrig"], desc: "Submetido pelo Home Office online. Não enviado diretamente ao Tech Nation." },
+    ]
+  },
+  {
+    title: "10 evidências formais",
+    subtitle: "Máximo permitido — use todas",
+    items: [
+      { id: "adappta-pdf", status: "done", title: "Portfólio — Adappta case study (PDF)", tags: ["ev", "opc"], desc: "PDF já existe e foi submetido ao UX Awards. Máx. 3 páginas A4. Evidência de inovação em campo digital." },
+      { id: "portfolio", status: "progress", title: "Portfólio online", tags: ["ev"], desc: "GitHub Pages. Meta: finalizar até 31/maio. Faltam: app colaboração, ajustes Instagram, about, contact, design gráfico, tese." },
+      { id: "japao", status: "progress", title: "Fórum de Tóquio — confirmação de participação", tags: ["ev", "obrig"], desc: "URGENTE — prazo 30/maio. Confirmar pagamento diretamente com o fórum. Guardar: convite, programa, comprovante." },
+      { id: "artigo", status: "progress", title: "Artigo publicado (vinculado ao fórum de Tóquio)", tags: ["ev", "opc"], desc: "Aguardando publicação. Evidência de reconhecimento além da organização." },
+      { id: "ux-awards", status: "progress", title: "UX Awards — resultado da submissão Adappta", tags: ["ev", "opc"], desc: "Submetido. Aguardando resultado. Nomeação ou prêmio conta como reconhecimento externo." },
+      { id: "tese", status: "progress", title: "Tese — documentação do processo", tags: ["ev", "opc"], desc: "UX research, framework, benchmarking sobre violência doméstica e social design em Portugal. Impacto social é diferencial forte." },
+      { id: "telus", status: "progress", title: "Telus Digital — evidência de produto", tags: ["ev", "opc"], desc: "Dashboards, landing pages, protótipos, +9K LinkedIn. Reescrever como entrega de produto, não marketing." },
+      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon — participação", tags: ["ev", "opc"], desc: "Documentar: eventos, contribuições, qualquer facilitação ou liderança. Comunidade internacional reconhecida." },
+      { id: "probono", status: "todo", title: "Projetos pro bono — métricas ou depoimentos", tags: ["ev", "opc"], desc: "Contatar clientes para obter dados ou depoimento qualitativo. Qualquer impacto mensurável ajuda." },
+      { id: "premio2", status: "todo", title: "2º prêmio de design — submissão", tags: ["ev", "opc"], desc: "Você mencionou dois prêmios. Qual é o segundo? Submeter antes da aplicação." },
+    ]
+  },
+  {
+    title: "Portfólio — páginas a terminar",
+    subtitle: "Meta: 31 de maio de 2026",
+    items: [
+      { id: "p-adappta", status: "done", title: "Adappta", desc: "Completo e submetido ao UX Awards. Verificar vídeo do protótipo no repo." },
+      { id: "p-instagram", status: "progress", title: "Instagram feature", desc: "Em ajustes." },
+      { id: "p-colab", status: "progress", title: "App de colaboração (mestrado)", desc: "HTML em construção." },
+      { id: "p-index", status: "progress", title: "Index — página inicial", desc: "Pequenos ajustes." },
+      { id: "p-about", status: "todo", title: "About me", desc: "Super pessoal e intimista — mostrar quem você é de verdade, não uma designer minimalista e nojenta." },
+      { id: "p-contact", status: "todo", title: "Contact", desc: "Página de contato." },
+      { id: "p-grafic", status: "todo", title: "Design gráfico", desc: "Galeria com todos os projetos gráficos." },
+      { id: "p-tese", status: "todo", title: "Tese", desc: "Pode montar já com o que tem: problema, pesquisa, framework, benchmarking. Seção 'solution in progress'." },
+    ]
+  },
+  {
+    title: "Critério mandatório",
+    subtitle: "Exceptional Promise — obrigatório demonstrar",
+    items: [
+      { id: "lider", status: "progress", title: "Reconhecimento como potencial líder em digital technology", tags: ["obrig"], desc: "Coberto por: Tóquio + UX Awards + Ladies that UX + tese. Precisa estar bem documentado e conectado na narrativa." },
+    ]
+  },
+  {
+    title: "Critérios opcionais",
+    subtitle: "Precisa atingir pelo menos 2 dos 4",
+    items: [
+      { id: "oc1", status: "progress", title: "Inovação em campo digital", tags: ["opc"], desc: "Adappta (app de acessibilidade urbana) + tese (social design e violência doméstica). Documentar processo end-to-end." },
+      { id: "oc2", status: "progress", title: "Reconhecimento além da organização", tags: ["opc"], desc: "Fórum Tóquio + artigo publicado + UX Awards + Ladies that UX. Seu critério mais forte." },
+      { id: "oc3", status: "progress", title: "Contribuições técnicas em empresa de produto", tags: ["opc"], desc: "Telus Digital + SAP. Reescrever CV para evidenciar mais produto e menos marketing." },
+      { id: "oc4", status: "todo", title: "Contribuições acadêmicas publicadas por especialista", tags: ["opc"], desc: "Artigo da tese / fórum de Tóquio. Coberto quando publicação sair." },
+    ]
+  }
+];
+
+function getStatusSymbol(s) {
+  if (s === "done") return "✓";
+  if (s === "progress") return "~";
+  return "";
+}
+
+function buildSections() {
+  const container = document.getElementById("sections");
+  data.forEach(section => {
+    const sec = document.createElement("div");
+    sec.className = "section";
+    const count = section.items.length;
+    sec.innerHTML = `
+      <div class="section-header">
+        <span class="section-title">${section.title}</span>
+        <span class="section-count">${section.subtitle}</span>
+      </div>
+    `;
+    section.items.forEach(item => {
+      const div = document.createElement("div");
+      div.className = `item${item.status === "done" ? " done-item" : ""}`;
+      div.id = `item-${item.id}`;
+      const tags = (item.tags || []).map(t => `<span class="tag ${t}">${t === "obrig" ? "mandatório" : t === "opc" ? "opcional" : "evidência"}</span>`).join("");
+      const urgent = item.id === "japao" ? `<span class="deadline">⚡ até 30/maio</span>` : "";
+      div.innerHTML = `
+        <div class="dot ${item.status}" id="dot-${item.id}">${getStatusSymbol(item.status)}</div>
+        <div class="item-body">
+          <div class="item-top">
+            <span class="item-title" id="title-${item.id}">${item.title}</span>
+            ${tags}${urgent}
+          </div>
+          <div class="item-desc">${item.desc}</div>
+        </div>
+        <button class="toggle-btn" onclick="cycleStatus('${item.id}')" title="Atualizar status">○</button>
+      `;
+      sec.appendChild(div);
+    });
+    container.appendChild(sec);
+  });
+}
+
+const statuses = ["todo", "progress", "done"];
+const stateMap = {};
+
+function initState() {
+  data.forEach(s => s.items.forEach(i => { stateMap[i.id] = i.status; }));
+}
+
+function cycleStatus(id) {
+  const cur = stateMap[id];
+  const next = statuses[(statuses.indexOf(cur) + 1) % statuses.length];
+  stateMap[id] = next;
+  const dot = document.getElementById(`dot-${id}`);
+  const titleEl = document.getElementById(`title-${id}`);
+  const itemEl = document.getElementById(`item-${id}`);
+  dot.className = `dot ${next}`;
+  dot.textContent = getStatusSymbol(next);
+  itemEl.classList.toggle("done-item", next === "done");
+  updateStats();
+  saveState();
+}
+
+function updateStats() {
+  const all = Object.values(stateMap);
+  const done = all.filter(s => s === "done").length;
+  const prog = all.filter(s => s === "progress").length;
+  const todo = all.filter(s => s === "todo").length;
+  const total = all.length;
+  document.getElementById("s-done").textContent = done;
+  document.getElementById("s-prog").textContent = prog;
+  document.getElementById("s-todo").textContent = todo;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("pct").textContent = pct + "%";
+  document.getElementById("bar").style.width = pct + "%";
+  document.getElementById("last-updated").textContent = "updated " + new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function saveState() {
+  try { localStorage.setItem("gt-tracker", JSON.stringify(stateMap)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem("gt-tracker");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      Object.keys(parsed).forEach(id => {
+        if (stateMap[id] !== undefined) stateMap[id] = parsed[id];
+      });
+    }
+  } catch(e) {}
+}
+
+buildSections();
+initState();
+loadState();
+
+// Apply loaded states to DOM
+Object.keys(stateMap).forEach(id => {
+  const dot = document.getElementById(`dot-${id}`);
+  const itemEl = document.getElementById(`item-${id}`);
+  if (dot) {
+    dot.className = `dot ${stateMap[id]}`;
+    dot.textContent = getStatusSymbol(stateMap[id]);
+  }
+  if (itemEl) itemEl.classList.toggle("done-item", stateMap[id] === "done");
+});
+
+updateStats();
+</script>
+</body>
+</html>
