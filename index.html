@@ -3,24 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Talent Tracker — Carmela</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Global Talent Tracker — Carmela 🇬🇧</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f0e0c;
-    --surface: #1a1916;
-    --surface2: #222118;
-    --border: #2e2c26;
-    --text: #e8e4d8;
-    --muted: #7a7568;
-    --accent: #c9a84c;
-    --accent2: #8b6fd4;
-    --done: #5a9e6f;
-    --progress: #c9a84c;
-    --todo: #4a4840;
-    --danger: #c95a5a;
-    --tag-obrig: #c95a5a;
-    --tag-opc: #5a7ec9;
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --surface2: #f0eee9;
+    --border: #e0dbd2;
+    --text: #1a1814;
+    --muted: #8a8278;
+    --red: #c8102e;
+    --blue: #012169;
+    --lightblue: #e8edf7;
+    --lightred: #fceef0;
+    --done: #1a7a45;
+    --done-bg: #e8f5ee;
+    --progress: #b07d0a;
+    --progress-bg: #fef8e7;
+    --todo-bg: #f5f3ef;
+    --tag-obrig-bg: #fceef0;
+    --tag-obrig: #c8102e;
+    --tag-opc-bg: #e8edf7;
+    --tag-opc: #012169;
+    --tag-ev-bg: #f0ebfa;
+    --tag-ev: #6b3fa0;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,242 +35,323 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Syne', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
     padding: 40px 24px 80px;
   }
 
-  .grain {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.4;
-  }
+  .wrap { max-width: 860px; margin: 0 auto; }
 
-  .wrap { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  /* Union Jack accent bar */
+  .topbar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red) 33%, var(--blue) 33%, var(--blue) 66%, var(--red) 66%);
+    border-radius: 99px;
+    margin-bottom: 40px;
+  }
 
   /* Header */
-  header { margin-bottom: 48px; }
+  header { margin-bottom: 40px; }
+  .flag { font-size: 32px; margin-bottom: 12px; display: block; }
   .eyebrow {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: .15em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 12px;
+    font-size: 11px; letter-spacing: .15em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 10px;
   }
   h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 5vw, 52px);
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.1; color: var(--blue); margin-bottom: 6px;
   }
-  h1 em { font-style: italic; color: var(--accent); }
-  .subtitle { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  h1 em { font-style: italic; color: var(--red); }
+  .subtitle { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
 
-  /* Progress bar */
-  .progress-wrap { margin: 32px 0 48px; }
+  /* Progress */
+  .progress-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px 24px; margin: 28px 0 32px;
+  }
   .progress-label {
     display: flex; justify-content: space-between;
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: var(--muted); margin-bottom: 8px;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: var(--muted); margin-bottom: 10px;
   }
-  .progress-label span:last-child { color: var(--accent); }
-  .bar-bg { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-label strong { color: var(--blue); font-size: 15px; }
+  .bar-bg { height: 8px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
   .bar-fill {
-    height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent));
-    border-radius: 2px; transition: width .6s ease;
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--red));
+    border-radius: 99px; transition: width .5s ease;
   }
 
-  /* Stats row */
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 48px; }
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
   .stat {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px;
+    border-radius: 14px; padding: 18px 20px; text-align: center;
   }
-  .stat-num {
-    font-family: 'DM Serif Display', serif; font-size: 36px;
-    line-height: 1; margin-bottom: 4px;
-  }
+  .stat-emoji { font-size: 22px; margin-bottom: 6px; display: block; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 34px; line-height: 1; margin-bottom: 4px; }
   .stat-num.done { color: var(--done); }
   .stat-num.prog { color: var(--progress); }
   .stat-num.todo { color: var(--muted); }
-  .stat-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .05em; }
+  .stat-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .04em; }
 
-  /* Sections */
-  .section { margin-bottom: 40px; }
+  /* Section */
+  .section { margin-bottom: 36px; }
   .section-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 16px; padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
   }
-  .section-title { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
-  .section-count {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    background: var(--surface2); border: 1px solid var(--border);
-    padding: 2px 8px; border-radius: 99px; color: var(--muted);
-  }
+  .section-emoji { font-size: 18px; }
+  .section-title { font-size: 14px; font-weight: 600; color: var(--blue); }
+  .section-sub { font-size: 12px; color: var(--muted); }
 
-  /* Items */
+  /* Item */
   .item {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 14px 16px; border-radius: 10px;
-    border: 1px solid transparent;
-    margin-bottom: 6px; cursor: pointer;
-    transition: all .2s;
-    background: var(--surface);
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px; border-radius: 12px;
+    border: 1.5px solid var(--border);
+    margin-bottom: 8px; background: var(--surface);
+    transition: all .15s;
   }
-  .item:hover { border-color: var(--border); background: var(--surface2); }
-  .item.done-item { opacity: .7; }
+  .item:hover { border-color: var(--blue); box-shadow: 0 2px 12px rgba(1,33,105,.06); }
+  .item.done-item { background: var(--done-bg); border-color: rgba(26,122,69,.2); }
+  .item.done-item:hover { border-color: var(--done); }
 
-  .dot {
-    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  /* Checkbox */
+  .checkbox {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; margin-top: 1px; font-weight: 600;
+    font-size: 14px; cursor: pointer; transition: all .15s;
+    border: 2px solid var(--border); background: var(--surface2);
+    user-select: none; margin-top: 1px;
   }
-  .dot.done { background: rgba(90,158,111,.15); color: var(--done); border: 1px solid rgba(90,158,111,.3); }
-  .dot.progress { background: rgba(201,168,76,.15); color: var(--progress); border: 1px solid rgba(201,168,76,.3); }
-  .dot.todo { background: var(--surface2); border: 1px solid var(--border); }
+  .checkbox:hover { border-color: var(--blue); transform: scale(1.05); }
+  .checkbox.done { background: var(--done); border-color: var(--done); color: white; }
+  .checkbox.progress { background: var(--progress-bg); border-color: var(--progress); }
+  .checkbox.todo { background: var(--surface2); }
 
   .item-body { flex: 1; min-width: 0; }
-  .item-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
-  .item-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .item-top { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-bottom: 4px; }
+  .item-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
   .item.done-item .item-title { text-decoration: line-through; color: var(--muted); }
-  .item-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .item-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
   .tag {
-    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .06em;
-    padding: 2px 7px; border-radius: 99px; text-transform: uppercase; flex-shrink: 0;
+    font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .05em;
+    padding: 2px 8px; border-radius: 99px; text-transform: uppercase;
+    font-weight: 500; flex-shrink: 0;
   }
-  .tag.obrig { background: rgba(201,90,90,.12); color: var(--tag-obrig); border: 1px solid rgba(201,90,90,.2); }
-  .tag.opc { background: rgba(90,126,201,.12); color: var(--tag-opc); border: 1px solid rgba(90,126,201,.2); }
-  .tag.ev { background: rgba(139,111,212,.12); color: var(--accent2); border: 1px solid rgba(139,111,212,.2); }
+  .tag.obrig { background: var(--tag-obrig-bg); color: var(--tag-obrig); }
+  .tag.opc { background: var(--tag-opc-bg); color: var(--tag-opc); }
+  .tag.ev { background: var(--tag-ev-bg); color: var(--tag-ev); }
 
-  /* Deadline pill */
   .deadline {
     font-family: 'DM Mono', monospace; font-size: 10px;
-    color: var(--danger); background: rgba(201,90,90,.1);
-    border: 1px solid rgba(201,90,90,.2);
-    padding: 2px 8px; border-radius: 99px;
+    color: var(--red); background: var(--lightred);
+    padding: 2px 8px; border-radius: 99px; font-weight: 500;
+    animation: pulse 1.5s ease-in-out infinite;
   }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
-  /* Toggle status */
-  .toggle-btn {
-    flex-shrink: 0; background: none; border: none; cursor: pointer;
-    color: var(--muted); font-size: 16px; padding: 0; line-height: 1;
-    transition: color .2s;
+  /* Docs checklist box */
+  .docs-box {
+    background: var(--lightblue); border: 1.5px solid rgba(1,33,105,.15);
+    border-radius: 14px; padding: 20px 24px; margin-bottom: 36px;
   }
-  .toggle-btn:hover { color: var(--done); }
+  .docs-box-title { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 4px; }
+  .docs-box-sub { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .doc-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid rgba(1,33,105,.1);
+    cursor: pointer;
+  }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-check {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid rgba(1,33,105,.3); background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; transition: all .15s;
+  }
+  .doc-check.checked { background: var(--blue); border-color: var(--blue); color: white; }
+  .doc-label { font-size: 13px; color: var(--text); flex: 1; }
+  .doc-label.checked { text-decoration: line-through; color: var(--muted); }
+  .doc-note { font-size: 11px; color: var(--muted); }
 
   /* Footer */
   footer {
-    margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+    margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
   }
-  footer span { color: var(--accent); }
-
-  @media (max-width: 600px) {
-    .stats { grid-template-columns: repeat(3, 1fr); }
-    .stat-num { font-size: 28px; }
-  }
+  footer .love { color: var(--red); }
 </style>
 </head>
 <body>
-<div class="grain"></div>
 <div class="wrap">
 
+  <div class="topbar"></div>
+
   <header>
+    <span class="flag">🇬🇧</span>
     <div class="eyebrow">Global Talent Visa · Exceptional Promise · Tech Nation</div>
-    <h1>The road to <em>London.</em></h1>
-    <p class="subtitle">Tracking every evidence, document, and deadline for the endorsement application.<br>Target: endorsement October 2026 · arrival November/December 2026.</p>
+    <h1>London, <em>here I come.</em></h1>
+    <p class="subtitle">Tracking every evidence, document and deadline for the Tech Nation endorsement. 🎯<br>
+    Target: endorsement October 2026 · arrival November/December 2026 ✈️</p>
   </header>
 
   <div class="progress-wrap">
     <div class="progress-label">
-      <span>Overall progress</span>
-      <span id="pct">0%</span>
+      <span>Overall progress 💪</span>
+      <strong id="pct">0%</strong>
     </div>
     <div class="bar-bg"><div class="bar-fill" id="bar" style="width:0%"></div></div>
   </div>
 
   <div class="stats">
-    <div class="stat"><div class="stat-num done" id="s-done">0</div><div class="stat-label">done</div></div>
-    <div class="stat"><div class="stat-num prog" id="s-prog">0</div><div class="stat-label">in progress</div></div>
-    <div class="stat"><div class="stat-num todo" id="s-todo">0</div><div class="stat-label">to do</div></div>
+    <div class="stat">
+      <span class="stat-emoji">✅</span>
+      <div class="stat-num done" id="s-done">0</div>
+      <div class="stat-label">done</div>
+    </div>
+    <div class="stat">
+      <span class="stat-emoji">🚧</span>
+      <div class="stat-num prog" id="s-prog">0</div>
+      <div class="stat-label">in progress</div>
+    </div>
+    <div class="stat">
+      <span class="stat-emoji">📋</span>
+      <div class="stat-num todo" id="s-todo">0</div>
+      <div class="stat-label">to do</div>
+    </div>
+  </div>
+
+  <!-- Docs safe storage reminder -->
+  <div class="docs-box">
+    <div class="docs-box-title">📁 Documents saved locally</div>
+    <div class="docs-box-sub">Mark what you already have saved on your computer or Google Drive. No uploads needed — keep sensitive docs off the internet! 🔒</div>
+    <div id="docs-list"></div>
   </div>
 
   <div id="sections"></div>
 
   <footer>
-    <span>Carmela Domingues</span>
+    <span>Made with <span class="love">♥</span> by Carmela Domingues</span>
     <span id="last-updated"></span>
   </footer>
 
 </div>
 
 <script>
+const docs = [
+  { id: "doc-cv", label: "CV", note: "Pronto ✓" },
+  { id: "doc-carta1", label: "Carta de recomendação 1 — orientadora", note: "A conseguir" },
+  { id: "doc-carta2", label: "Carta de recomendação 2", note: "A conseguir" },
+  { id: "doc-carta3", label: "Carta de recomendação 3", note: "A conseguir" },
+  { id: "doc-adappta", label: "Adappta case study PDF", note: "Já submetido ao UX Awards ✓" },
+  { id: "doc-japao", label: "Confirmação fórum de Kyoto + comprovante pagamento", note: "Urgente — até 30/maio ⚡" },
+  { id: "doc-artigo", label: "Artigo publicado", note: "Aguardando publicação" },
+  { id: "doc-uxawards", label: "Resultado UX Awards", note: "Aguardando" },
+  { id: "doc-tese", label: "Documentação da tese (framework + research)", note: "Em andamento" },
+  { id: "doc-ladies", label: "Comprovante Ladies that UX Lisbon", note: "A documentar" },
+];
+
 const data = [
   {
+    emoji: "📄",
     title: "Documentos obrigatórios",
-    subtitle: "Tech Nation exige todos — sem exceção",
+    sub: "Tech Nation exige todos — sem exceção",
     items: [
-      { id: "cv", status: "done", title: "CV", tags: ["obrig"], desc: "Pronto. Considerar reescrever bullets da Telus e SAP para soar mais UX/produto." },
-      { id: "ps", status: "todo", title: "Personal statement", tags: ["obrig"], desc: "Responder: por que UK, o que vai fazer, como vai contribuir para o setor de tech." },
-      { id: "cartas", status: "progress", title: "3 cartas de recomendação", tags: ["obrig"], desc: "1 confirmada (orientadora). Faltam 2 — idealmente de produto digital. Ladies that UX ou cliente pro bono são opções." },
-      { id: "form", status: "todo", title: "Formulário de aplicação", tags: ["obrig"], desc: "Submetido pelo Home Office online. Não enviado diretamente ao Tech Nation." },
+      { id: "cv", status: "done", title: "CV 📝", tags: ["obrig"], desc: "Pronto! Considerar reescrever bullets da Telus e SAP para soar mais UX/produto." },
+      { id: "ps", status: "todo", title: "Personal statement ✍️", tags: ["obrig"], desc: "Responder: por que UK, o que vai fazer, como vai contribuir para o setor de tech." },
+      { id: "cartas", status: "progress", title: "3 cartas de recomendação 💌", tags: ["obrig"], desc: "1 confirmada (orientadora). Faltam 2 — idealmente de produto digital. Ladies that UX ou cliente pro bono são opções." },
+      { id: "form", status: "todo", title: "Formulário de aplicação 🏛️", tags: ["obrig"], desc: "Submetido pelo Home Office online. Não enviado diretamente ao Tech Nation." },
     ]
   },
   {
+    emoji: "🏆",
     title: "10 evidências formais",
-    subtitle: "Máximo permitido — use todas",
+    sub: "Máximo permitido — use todas!",
     items: [
-      { id: "adappta-pdf", status: "done", title: "Portfólio — Adappta case study (PDF)", tags: ["ev", "opc"], desc: "PDF já existe e foi submetido ao UX Awards. Máx. 3 páginas A4. Evidência de inovação em campo digital." },
-      { id: "portfolio", status: "progress", title: "Portfólio online", tags: ["ev"], desc: "GitHub Pages. Meta: finalizar até 31/maio. Faltam: app colaboração, ajustes Instagram, about, contact, design gráfico, tese." },
-      { id: "japao", status: "progress", title: "Fórum de Tóquio — confirmação de participação", tags: ["ev", "obrig"], desc: "URGENTE — prazo 30/maio. Confirmar pagamento diretamente com o fórum. Guardar: convite, programa, comprovante." },
-      { id: "artigo", status: "progress", title: "Artigo publicado (vinculado ao fórum de Tóquio)", tags: ["ev", "opc"], desc: "Aguardando publicação. Evidência de reconhecimento além da organização." },
-      { id: "ux-awards", status: "progress", title: "UX Awards — resultado da submissão Adappta", tags: ["ev", "opc"], desc: "Submetido. Aguardando resultado. Nomeação ou prêmio conta como reconhecimento externo." },
-      { id: "tese", status: "progress", title: "Tese — documentação do processo", tags: ["ev", "opc"], desc: "UX research, framework, benchmarking sobre violência doméstica e social design em Portugal. Impacto social é diferencial forte." },
-      { id: "telus", status: "progress", title: "Telus Digital — evidência de produto", tags: ["ev", "opc"], desc: "Dashboards, landing pages, protótipos, +9K LinkedIn. Reescrever como entrega de produto, não marketing." },
-      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon — participação", tags: ["ev", "opc"], desc: "Documentar: eventos, contribuições, qualquer facilitação ou liderança. Comunidade internacional reconhecida." },
-      { id: "probono", status: "todo", title: "Projetos pro bono — métricas ou depoimentos", tags: ["ev", "opc"], desc: "Contatar clientes para obter dados ou depoimento qualitativo. Qualquer impacto mensurável ajuda." },
-      { id: "premio2", status: "todo", title: "2º prêmio de design — submissão", tags: ["ev", "opc"], desc: "Você mencionou dois prêmios. Qual é o segundo? Submeter antes da aplicação." },
+      { id: "adappta-pdf", status: "done", title: "Adappta case study PDF 📱", tags: ["ev", "opc"], desc: "PDF pronto e submetido ao UX Awards! Evidência de inovação em campo digital. Máx. 3 páginas A4." },
+      { id: "portfolio", status: "progress", title: "Portfólio online 🌐", tags: ["ev"], desc: "GitHub Pages. Meta: finalizar até 31/maio. Faltam: app colaboração, ajustes Instagram, about, contact, design gráfico, tese." },
+      { id: "kyoto", status: "progress", title: "Fórum de Kyoto 🇯🇵", tags: ["ev", "obrig"], desc: "URGENTE — prazo 30/maio! Confirmar pagamento direto com o fórum. Guardar: convite, programa com seu nome, comprovante.", urgent: true },
+      { id: "artigo", status: "progress", title: "Artigo publicado 📰", tags: ["ev", "opc"], desc: "Aguardando publicação. Evidência fortíssima de reconhecimento além da organização." },
+      { id: "ux-awards", status: "progress", title: "UX Awards — Adappta 🥇", tags: ["ev", "opc"], desc: "Submetido! Aguardando resultado. Nomeação ou prêmio conta como reconhecimento externo." },
+      { id: "tese", status: "progress", title: "Tese — documentação do processo 🎓", tags: ["ev", "opc"], desc: "UX research, framework e benchmarking sobre violência doméstica e social design em Portugal. Impacto social é seu diferencial." },
+      { id: "telus", status: "progress", title: "Telus Digital — evidência de produto 💼", tags: ["ev", "opc"], desc: "Dashboards, landing pages, protótipos, +9K LinkedIn. Reescrever como entrega de produto, não marketing." },
+      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon 👩‍💻", tags: ["ev", "opc"], desc: "Documentar: eventos, contribuições, qualquer facilitação ou liderança. Comunidade internacional reconhecida!" },
+      { id: "probono", status: "todo", title: "Projetos pro bono — métricas 📊", tags: ["ev", "opc"], desc: "Contatar clientes para dados ou depoimento qualitativo. Qualquer impacto mensurável ajuda." },
+      { id: "premio2", status: "todo", title: "2º prêmio de design 🏅", tags: ["ev", "opc"], desc: "Você mencionou dois prêmios. Qual é o segundo? Vale submeter antes da aplicação!" },
     ]
   },
   {
+    emoji: "🎨",
     title: "Portfólio — páginas a terminar",
-    subtitle: "Meta: 31 de maio de 2026",
+    sub: "Meta: 31 de maio de 2026 🚀",
     items: [
-      { id: "p-adappta", status: "done", title: "Adappta", desc: "Completo e submetido ao UX Awards. Verificar vídeo do protótipo no repo." },
-      { id: "p-instagram", status: "progress", title: "Instagram feature", desc: "Em ajustes." },
-      { id: "p-colab", status: "progress", title: "App de colaboração (mestrado)", desc: "HTML em construção." },
-      { id: "p-index", status: "progress", title: "Index — página inicial", desc: "Pequenos ajustes." },
-      { id: "p-about", status: "todo", title: "About me", desc: "Super pessoal e intimista — mostrar quem você é de verdade, não uma designer minimalista e nojenta." },
-      { id: "p-contact", status: "todo", title: "Contact", desc: "Página de contato." },
-      { id: "p-grafic", status: "todo", title: "Design gráfico", desc: "Galeria com todos os projetos gráficos." },
-      { id: "p-tese", status: "todo", title: "Tese", desc: "Pode montar já com o que tem: problema, pesquisa, framework, benchmarking. Seção 'solution in progress'." },
+      { id: "p-adappta", status: "done", title: "Adappta ✅", desc: "Completo e lindo! Submetido ao UX Awards." },
+      { id: "p-instagram", status: "progress", title: "Instagram feature 📸", desc: "Em ajustes." },
+      { id: "p-colab", status: "progress", title: "App de colaboração (mestrado) 🤝", desc: "HTML em construção." },
+      { id: "p-index", status: "progress", title: "Index — página inicial 🏠", desc: "Pequenos ajustes." },
+      { id: "p-about", status: "todo", title: "About me 🙋‍♀️", desc: "Super pessoal e intimista — mostrar quem você é de verdade. Nada de designer minimalista e nojenta!" },
+      { id: "p-contact", status: "todo", title: "Contact 📬", desc: "Página de contato." },
+      { id: "p-grafic", status: "todo", title: "Design gráfico 🖌️", desc: "Galeria com todos os projetos gráficos." },
+      { id: "p-tese", status: "todo", title: "Tese 🔬", desc: "Pode montar já! Problema, pesquisa, framework, benchmarking. Seção 'solution in progress'." },
     ]
   },
   {
+    emoji: "⭐",
     title: "Critério mandatório",
-    subtitle: "Exceptional Promise — obrigatório demonstrar",
+    sub: "Exceptional Promise — obrigatório demonstrar",
     items: [
-      { id: "lider", status: "progress", title: "Reconhecimento como potencial líder em digital technology", tags: ["obrig"], desc: "Coberto por: Tóquio + UX Awards + Ladies that UX + tese. Precisa estar bem documentado e conectado na narrativa." },
+      { id: "lider", status: "progress", title: "Reconhecimento como potencial líder em digital technology 🌟", tags: ["obrig"], desc: "Coberto por: Kyoto + UX Awards + Ladies that UX + tese. Precisa estar bem documentado e conectado na narrativa." },
     ]
   },
   {
+    emoji: "✨",
     title: "Critérios opcionais",
-    subtitle: "Precisa atingir pelo menos 2 dos 4",
+    sub: "Precisa atingir pelo menos 2 dos 4",
     items: [
-      { id: "oc1", status: "progress", title: "Inovação em campo digital", tags: ["opc"], desc: "Adappta (app de acessibilidade urbana) + tese (social design e violência doméstica). Documentar processo end-to-end." },
-      { id: "oc2", status: "progress", title: "Reconhecimento além da organização", tags: ["opc"], desc: "Fórum Tóquio + artigo publicado + UX Awards + Ladies that UX. Seu critério mais forte." },
-      { id: "oc3", status: "progress", title: "Contribuições técnicas em empresa de produto", tags: ["opc"], desc: "Telus Digital + SAP. Reescrever CV para evidenciar mais produto e menos marketing." },
-      { id: "oc4", status: "todo", title: "Contribuições acadêmicas publicadas por especialista", tags: ["opc"], desc: "Artigo da tese / fórum de Tóquio. Coberto quando publicação sair." },
+      { id: "oc1", status: "progress", title: "Inovação em campo digital 💡", tags: ["opc"], desc: "Adappta + tese (social design e violência doméstica). Documentar processo end-to-end." },
+      { id: "oc2", status: "progress", title: "Reconhecimento além da organização 🌍", tags: ["opc"], desc: "Kyoto + artigo + UX Awards + Ladies that UX. Seu critério mais forte!" },
+      { id: "oc3", status: "progress", title: "Contribuições técnicas em empresa de produto 🏢", tags: ["opc"], desc: "Telus Digital + SAP. Reescrever CV para evidenciar mais produto e menos marketing." },
+      { id: "oc4", status: "todo", title: "Contribuições acadêmicas publicadas 📚", tags: ["opc"], desc: "Artigo da tese / fórum de Kyoto. Coberto quando a publicação sair." },
     ]
   }
 ];
 
-function getStatusSymbol(s) {
+// Build docs checklist
+function buildDocs() {
+  const container = document.getElementById("docs-list");
+  const saved = JSON.parse(localStorage.getItem("gt-docs") || "{}");
+  docs.forEach(doc => {
+    const checked = saved[doc.id] || false;
+    const row = document.createElement("div");
+    row.className = "doc-row";
+    row.onclick = () => toggleDoc(doc.id);
+    row.innerHTML = `
+      <div class="doc-check ${checked ? 'checked' : ''}" id="dcheck-${doc.id}">${checked ? '✓' : ''}</div>
+      <span class="doc-label ${checked ? 'checked' : ''}" id="dlabel-${doc.id}">${doc.label}</span>
+      <span class="doc-note">${doc.note}</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function toggleDoc(id) {
+  const saved = JSON.parse(localStorage.getItem("gt-docs") || "{}");
+  saved[id] = !saved[id];
+  localStorage.setItem("gt-docs", JSON.stringify(saved));
+  document.getElementById(`dcheck-${id}`).className = `doc-check ${saved[id] ? 'checked' : ''}`;
+  document.getElementById(`dcheck-${id}`).textContent = saved[id] ? '✓' : '';
+  document.getElementById(`dlabel-${id}`).className = `doc-label ${saved[id] ? 'checked' : ''}`;
+}
+
+// Build sections
+function getSymbol(s) {
   if (s === "done") return "✓";
   if (s === "progress") return "~";
   return "";
@@ -274,11 +362,11 @@ function buildSections() {
   data.forEach(section => {
     const sec = document.createElement("div");
     sec.className = "section";
-    const count = section.items.length;
     sec.innerHTML = `
       <div class="section-header">
+        <span class="section-emoji">${section.emoji}</span>
         <span class="section-title">${section.title}</span>
-        <span class="section-count">${section.subtitle}</span>
+        <span class="section-sub">— ${section.sub}</span>
       </div>
     `;
     section.items.forEach(item => {
@@ -286,9 +374,9 @@ function buildSections() {
       div.className = `item${item.status === "done" ? " done-item" : ""}`;
       div.id = `item-${item.id}`;
       const tags = (item.tags || []).map(t => `<span class="tag ${t}">${t === "obrig" ? "mandatório" : t === "opc" ? "opcional" : "evidência"}</span>`).join("");
-      const urgent = item.id === "japao" ? `<span class="deadline">⚡ até 30/maio</span>` : "";
+      const urgent = item.urgent ? `<span class="deadline">⚡ até 30/maio</span>` : "";
       div.innerHTML = `
-        <div class="dot ${item.status}" id="dot-${item.id}">${getStatusSymbol(item.status)}</div>
+        <div class="checkbox ${item.status}" id="cb-${item.id}" onclick="cycleStatus('${item.id}')">${getSymbol(item.status)}</div>
         <div class="item-body">
           <div class="item-top">
             <span class="item-title" id="title-${item.id}">${item.title}</span>
@@ -296,7 +384,6 @@ function buildSections() {
           </div>
           <div class="item-desc">${item.desc}</div>
         </div>
-        <button class="toggle-btn" onclick="cycleStatus('${item.id}')" title="Atualizar status">○</button>
       `;
       sec.appendChild(div);
     });
@@ -315,11 +402,10 @@ function cycleStatus(id) {
   const cur = stateMap[id];
   const next = statuses[(statuses.indexOf(cur) + 1) % statuses.length];
   stateMap[id] = next;
-  const dot = document.getElementById(`dot-${id}`);
-  const titleEl = document.getElementById(`title-${id}`);
+  const cb = document.getElementById(`cb-${id}`);
   const itemEl = document.getElementById(`item-${id}`);
-  dot.className = `dot ${next}`;
-  dot.textContent = getStatusSymbol(next);
+  cb.className = `checkbox ${next}`;
+  cb.textContent = getSymbol(next);
   itemEl.classList.toggle("done-item", next === "done");
   updateStats();
   saveState();
@@ -349,25 +435,20 @@ function loadState() {
     const saved = localStorage.getItem("gt-tracker");
     if (saved) {
       const parsed = JSON.parse(saved);
-      Object.keys(parsed).forEach(id => {
-        if (stateMap[id] !== undefined) stateMap[id] = parsed[id];
-      });
+      Object.keys(parsed).forEach(id => { if (stateMap[id] !== undefined) stateMap[id] = parsed[id]; });
     }
   } catch(e) {}
 }
 
+buildDocs();
 buildSections();
 initState();
 loadState();
 
-// Apply loaded states to DOM
 Object.keys(stateMap).forEach(id => {
-  const dot = document.getElementById(`dot-${id}`);
+  const cb = document.getElementById(`cb-${id}`);
   const itemEl = document.getElementById(`item-${id}`);
-  if (dot) {
-    dot.className = `dot ${stateMap[id]}`;
-    dot.textContent = getStatusSymbol(stateMap[id]);
-  }
+  if (cb) { cb.className = `checkbox ${stateMap[id]}`; cb.textContent = getSymbol(stateMap[id]); }
   if (itemEl) itemEl.classList.toggle("done-item", stateMap[id] === "done");
 });
 
