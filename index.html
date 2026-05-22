@@ -21,7 +21,6 @@
     --done-bg: #e8f5ee;
     --progress: #b07d0a;
     --progress-bg: #fef8e7;
-    --todo-bg: #f5f3ef;
     --tag-obrig-bg: #fceef0;
     --tag-obrig: #c8102e;
     --tag-opc-bg: #e8edf7;
@@ -64,7 +63,6 @@
   h1 em { font-style: italic; color: var(--red); }
   .subtitle { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
 
-  /* Timeline pills */
   .timeline {
     display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 32px;
   }
@@ -75,6 +73,7 @@
     color: var(--muted); display: flex; align-items: center; gap: 6px;
   }
   .tpill.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .tpill.done { background: var(--done-bg); border-color: var(--done); color: var(--done); }
   .tpill.target { background: var(--lightred); border-color: var(--red); color: var(--red); }
 
   .progress-wrap {
@@ -208,9 +207,12 @@
 
   <div class="timeline">
     <div class="tpill active">📍 Now — May 2026</div>
-    <div class="tpill">🎨 Portfolio done — May 31</div>
-    <div class="tpill">🇯🇵 Kyoto confirmed — May 30</div>
-    <div class="tpill">📝 Evidence ready — September</div>
+    <div class="tpill done">🇯🇵 Kyoto paid ✓</div>
+    <div class="tpill done">📝 Touchpoint submitted ✓</div>
+    <div class="tpill">🎓 Thesis defence — July</div>
+    <div class="tpill">📄 CWUAAT paper — 8 July</div>
+    <div class="tpill">📰 diid submission — Sep 30</div>
+    <div class="tpill">📋 Evidence ready — September</div>
     <div class="tpill target">🚀 Submit endorsement — Oct 2026</div>
     <div class="tpill target">🇬🇧 London — Jan 2027</div>
   </div>
@@ -260,14 +262,17 @@
 const docs = [
   { id: "doc-cv", label: "CV", note: "Ready ✓" },
   { id: "doc-carta1", label: "Letter of recommendation 1 — supervisor", note: "To collect" },
-  { id: "doc-carta2", label: "Letter of recommendation 2", note: "To collect" },
-  { id: "doc-carta3", label: "Letter of recommendation 3", note: "To collect" },
-  { id: "doc-adappta", label: "Adappta case study PDF", note: "Submitted to UX Awards ✓" },
-  { id: "doc-kyoto", label: "Kyoto forum confirmation + payment receipt", note: "Urgent — by May 30 ⚡" },
-  { id: "doc-artigo", label: "Published article", note: "Awaiting publication" },
-  { id: "doc-uxawards", label: "UX Awards result", note: "Awaiting result" },
-  { id: "doc-tese", label: "Thesis documentation (framework + research)", note: "In progress" },
+  { id: "doc-carta2", label: "Letter of recommendation 2 — co-supervisor", note: "To collect" },
+  { id: "doc-carta3", label: "Letter of recommendation 3 — Ladies that UX mentor", note: "To collect" },
+  { id: "doc-adappta", label: "Adappta case study PDF", note: "Submitted to IDZ Berlin ✓" },
+  { id: "doc-kyoto", label: "Kyoto forum confirmation + payment receipt", note: "Paid ✓" },
+  { id: "doc-artigo", label: "Published article — JDSSI", note: "Awaiting publication" },
+  { id: "doc-uxawards", label: "IDZ Berlin UX Awards result", note: "Result: 2 June" },
+  { id: "doc-touchpoint", label: "Touchpoint abstract confirmation", note: "Submitted ✓" },
+  { id: "doc-tese", label: "Thesis documentation (framework + research)", note: "Defence: July" },
   { id: "doc-ladies", label: "Ladies that UX Lisbon proof of participation", note: "To document" },
+  { id: "doc-cwuaat", label: "CWUAAT paper acceptance — Springer", note: "Submit by 8 July" },
+  { id: "doc-diid", label: "diid journal submission", note: "Submit by 30 Sep" },
 ];
 
 const data = [
@@ -278,7 +283,7 @@ const data = [
     items: [
       { id: "cv", status: "done", title: "CV 📝", tags: ["obrig"], desc: "Ready! Consider rewriting Telus and SAP bullets to sound more like UX/product work." },
       { id: "ps", status: "todo", title: "Personal statement ✍️", tags: ["obrig"], desc: "Must answer: why the UK, what you'll do there, and how your work will contribute to the digital tech sector." },
-      { id: "cartas", status: "progress", title: "3 letters of recommendation 💌", tags: ["obrig"], desc: "1 confirmed (supervisor). Need 2 more — ideally from product-led digital tech. Ladies that UX or pro bono client are good options." },
+      { id: "cartas", status: "progress", title: "3 letters of recommendation 💌", tags: ["obrig"], desc: "1. Supervisor (thesis). 2. Co-supervisor (service design professor). 3. Ladies that UX mentor (6 months weekly mentoring). All need to address Tech Nation criteria explicitly." },
       { id: "form", status: "todo", title: "Tech Nation application form 🏛️", tags: ["obrig"], desc: "Submitted online via the Home Office portal. Not sent directly to Tech Nation." },
     ]
   },
@@ -287,16 +292,16 @@ const data = [
     title: "10 formal pieces of evidence",
     sub: "Maximum allowed — use all of them!",
     items: [
-      { id: "adappta-pdf", status: "done", title: "Adappta case study PDF 📱", tags: ["ev", "opc"], desc: "PDF ready and submitted to UX Awards! Evidence of innovation in a digital field. Max. 3 A4 pages." },
+      { id: "adappta-pdf", status: "done", title: "Adappta case study PDF 📱", tags: ["ev", "opc"], desc: "PDF ready and submitted to IDZ Berlin UX Awards. Evidence of innovation in a digital field. Max. 3 A4 pages." },
       { id: "portfolio", status: "progress", title: "Online portfolio 🌐", tags: ["ev"], desc: "GitHub Pages. Goal: done by May 31. Still missing: collab app, Instagram adjustments, about, contact, graphic design, thesis." },
-      { id: "kyoto", status: "progress", title: "Kyoto forum — participation 🇯🇵", tags: ["ev", "obrig"], desc: "URGENT — deadline May 30! Confirm payment directly with the forum. Save: invitation, programme with your name, payment receipt.", urgent: true },
-      { id: "artigo", status: "progress", title: "Published article 📰", tags: ["ev", "opc"], desc: "Awaiting publication. Very strong evidence of recognition beyond your organisation." },
-      { id: "ux-awards", status: "progress", title: "UX Awards — Adappta 🥇", tags: ["ev", "opc"], desc: "Submitted! Awaiting result. A nomination or award counts as external recognition." },
-      { id: "tese", status: "progress", title: "Thesis — process documentation 🎓", tags: ["ev", "opc"], desc: "UX research, framework and benchmarking on domestic violence and social design in Portugal. Social impact is your differentiator." },
-      { id: "telus", status: "progress", title: "Telus Digital — product evidence 💼", tags: ["ev", "opc"], desc: "Dashboards, landing pages, prototypes, +9K LinkedIn. Reframe as product delivery, not marketing." },
-      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon 👩‍💻", tags: ["ev", "opc"], desc: "Document: events, contributions, any facilitation or leadership. Internationally recognised community!" },
-      { id: "probono", status: "todo", title: "Pro bono projects — metrics 📊", tags: ["ev", "opc"], desc: "Reach out to clients for data or qualitative testimonials. Any measurable impact helps." },
-      { id: "premio2", status: "todo", title: "2nd design award — submission 🏅", tags: ["ev", "opc"], desc: "You mentioned two awards. Which is the second one? Worth submitting before the application!" },
+      { id: "kyoto", status: "done", title: "Kyoto forum — participation confirmed 🇯🇵", tags: ["ev", "obrig"], desc: "PAID ✓ Listed by Design Research Society. Invitation letter coming after payment. Save: programme with your name, photos, banner." },
+      { id: "artigo", status: "progress", title: "Published article — JDSSI 📰", tags: ["ev", "opc"], desc: "Awaiting publication. Linked to Kyoto forum. DRS-affiliated journal. Strong evidence of academic recognition beyond your organisation." },
+      { id: "ux-awards", status: "progress", title: "IDZ Berlin UX Awards — Adappta 🥇", tags: ["ev", "obrig"], desc: "Submitted! Result announced 2 June. IDZ Berlin is one of Europe's most respected design institutions. Nomination = mandatory criteria covered." },
+      { id: "tese", status: "progress", title: "Thesis — process documentation 🎓", tags: ["ev", "opc"], desc: "UX research, framework and benchmarking on domestic violence and social design in Portugal. Defence: July 2026. Strong OC4 evidence." },
+      { id: "touchpoint", status: "done", title: "Touchpoint — SDN journal abstract 📋", tags: ["ev", "opc"], desc: "Submitted today ✓ The Journal of Service Design by Service Design Network. Practice-oriented publication for designers worldwide." },
+      { id: "cwuaat", status: "todo", title: "CWUAAT 2027 — Springer paper 📚", tags: ["ev", "opc"], desc: "Submit Adappta as long paper by 8 July. Acceptance notification: 21 September — before your endorsement submission! Published by Springer." },
+      { id: "ladies", status: "todo", title: "Ladies that UX Lisbon 👩‍💻", tags: ["ev", "opc"], desc: "Document: 6 months weekly mentoring sessions, portfolio development, participation in events. LinkedIn Live talk about UX research to pursue." },
+      { id: "diid", status: "todo", title: "diid journal — framework article 📖", tags: ["ev", "opc"], desc: "Submit the phase-based framework paper by 30 September. Publication by Università di Bologna. Result before October endorsement submission." },
     ]
   },
   {
@@ -304,7 +309,7 @@ const data = [
     title: "Portfolio — pages to finish",
     sub: "Goal: May 31, 2026 🚀",
     items: [
-      { id: "p-adappta", status: "done", title: "Adappta ✅", desc: "Complete and gorgeous! Submitted to UX Awards." },
+      { id: "p-adappta", status: "done", title: "Adappta ✅", desc: "Complete and gorgeous! Submitted to IDZ Berlin UX Awards." },
       { id: "p-instagram", status: "progress", title: "Instagram feature 📸", desc: "Minor adjustments." },
       { id: "p-colab", status: "progress", title: "Collaboration app (master's) 🤝", desc: "HTML in progress." },
       { id: "p-index", status: "progress", title: "Index — homepage 🏠", desc: "Minor adjustments." },
@@ -319,18 +324,16 @@ const data = [
     title: "Mandatory criterion",
     sub: "Exceptional Promise — must demonstrate this",
     items: [
-      { id: "lider", status: "progress", title: "Recognised as a potential leader in digital technology 🌟", tags: ["obrig"], desc: "Covered by: Kyoto + UX Awards + Ladies that UX + thesis. Needs to be well documented and connected through a coherent narrative." },
+      { id: "lider", status: "progress", title: "Recognised as a potential leader in digital technology 🌟", tags: ["obrig"], desc: "Covered by: Kyoto (DRS-listed) + IDZ Berlin + Touchpoint SDN + thesis. Needs coherent narrative connecting all evidence." },
     ]
   },
   {
     emoji: "✨",
-    title: "Optional criteria",
+    title: "Optional criteria — OC2 + OC4",
     sub: "Must meet at least 2 out of 4",
     items: [
-      { id: "oc1", status: "progress", title: "Innovation in a digital field 💡", tags: ["opc"], desc: "Adappta + thesis (social design and domestic violence). Document the end-to-end process." },
-      { id: "oc2", status: "progress", title: "Recognition beyond your organisation 🌍", tags: ["opc"], desc: "Kyoto + article + UX Awards + Ladies that UX. Your strongest criterion!" },
-      { id: "oc3", status: "progress", title: "Technical contributions at a product-led company 🏢", tags: ["opc"], desc: "Telus Digital + SAP. Rewrite CV to highlight product work over marketing." },
-      { id: "oc4", status: "todo", title: "Academic contributions published by an expert 📚", tags: ["opc"], desc: "Thesis article / Kyoto forum. Covered once the publication is out." },
+      { id: "oc2", status: "progress", title: "OC2 — Industry contributions 🌍", tags: ["opc"], desc: "Kyoto (conference speaking, DRS-listed) + Touchpoint (thought leadership, SDN journal) + Ladies that UX LinkedIn Live talk (to pursue). Min. 2 evidence docs." },
+      { id: "oc4", status: "progress", title: "OC4 — Academic contributions 📚", tags: ["opc"], desc: "JDSSI article + thesis defended + CWUAAT/Springer acceptance (if achieved) + diid submission. Rare in tech applications = higher endorsement rate." },
     ]
   }
 ];
@@ -384,7 +387,7 @@ function buildSections() {
       div.className = `item${item.status === "done" ? " done-item" : ""}`;
       div.id = `item-${item.id}`;
       const tags = (item.tags || []).map(t => `<span class="tag ${t}">${t === "obrig" ? "mandatory" : t === "opc" ? "optional" : "evidence"}</span>`).join("");
-      const urgent = item.urgent ? `<span class="deadline">⚡ by May 30</span>` : "";
+      const urgent = item.urgent ? `<span class="deadline">⚡ urgent</span>` : "";
       div.innerHTML = `
         <div class="checkbox ${item.status}" id="cb-${item.id}" onclick="cycleStatus('${item.id}')">${getSymbol(item.status)}</div>
         <div class="item-body">
